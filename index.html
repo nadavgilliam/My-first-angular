@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Wix Salon">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+
+        <!--Bootstrap-->
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <!--Jquery-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+        <!--Angular-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+
+        <!--Attachments-->
+
+        <script type = "text/javascript" src = "app.js"></script>
+        <script type = "text/css" src = "Stylesheet.css"></script>
+
+        <!--Firebase-->
+
+
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyDwxYBPo1MoQrGZVvtuCU-evf5Uo_f3_oY",
+                authDomain: "myfirstangular-a1460.firebaseapp.com",
+                databaseURL: "https://myfirstangular-a1460.firebaseio.com",
+                storageBucket: "myfirstangular-a1460.appspot.com",
+            };
+            firebase.initializeApp(config);
+        </script>
+
+
+        <!--&lt;!&ndash; Firebase &ndash;&gt;-->
+        <!--<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>-->
+        <!--&lt;!&ndash; AngularFire &ndash;&gt;-->
+        <!--<script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>-->
+
+    </head>
+
+
+
+    <body>
+
+        <!--FB login script-->
+
+        <!--<script>-->
+            <!--window.fbAsyncInit = function() {-->
+                <!--FB.init({-->
+                    <!--appId      : '942775089154329',-->
+                    <!--xfbml      : true,-->
+                    <!--version    : 'v2.6',-->
+                    <!--status     : true-->
+                <!--});-->
+
+                <!--FB.getLoginStatus(function(response) {-->
+                    <!--if(response.status === 'connected') {-->
+                        <!--document.getElementById('status').innerHTML = 'We are connected'-->
+                    <!--} else if (response.status === 'not authorized') {-->
+                        <!--document.getElementById('status').innerHTML = 'We are not logged in.'-->
+                    <!--} else {-->
+                        <!--document.getElementById('status').innerHTML = 'Fudge'-->
+                    <!--}-->
+                <!--});-->
+            <!--};-->
+
+            <!--(function(d, s, id){-->
+                <!--var js, fjs = d.getElementsByTagName(s)[0];-->
+                <!--if (d.getElementById(id)) {return;}-->
+                <!--js = d.createElement(s); js.id = id;-->
+                <!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
+                <!--fjs.parentNode.insertBefore(js, fjs);-->
+            <!--}(document, 'script', 'facebook-jssdk'));-->
+        <!--</script>-->
+        <!--FB login-->
+
+        <section class="headerTabs" ng-controller="headerPanelController as headerPanel">
+
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Wix Hair Salon</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{ headerPanel: isSelected(1) }">
+                            <a href ng-click="headerPanel.selectTab(1)">Home</a>
+                        </li>
+                        <li ng-class="{ headerPanel:isSelected(2) }">
+                            <a href ng-click="headerPanel.selectTab(2)">Services</a>
+                        </li>
+                        <li ng-class="{ headerPanel: isSelected(3) }">
+                            <a href ng-click="headerPanel.selectTab(3)">Booking & Hours</a>
+                        </li>
+                        <li ng-class="{ headerPanel: isSelected(4) }">
+                            <a href ng-click="headerPanel.selectTab(4)">Reviews</a>
+                        </li>
+                        <li ng-class=" { headerPanel: isSelected(5) }">
+                            <a href ng-click="headerPanel.selectTab(5)">Contact</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-class=" { headerPanel: isSelected(6) }">
+                            <a href ng-click="headerPanel.selectTab(6)"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                        </li>
+                        <li ng-class=" { headerPanel: isSelected(7) }">
+                            <a href ng-click="headerPanel.selectTab(7)"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!--Hompage-->
+
+            <div class="headerPanel" ng-show="headerPanel.isSelected(1)">
+                Homepage
+            </div>
+
+            <!--Services-->
+
+            <div class="headerPanel" ng-show="headerPanel.isSelected(2)" ng-controller="servicePanelController as servicePanel">
+                <ul class="nav nav-pills">
+                    <li ng-class="{ servicePanel:isSelected(1)}">
+                        <a href ng-click="servicePanel.selectTab(1)">cuts</a>
+                    </li>
+                    <li ng-class="{ servicePanel:isSelected(2)}">
+                        <a href ng-click="servicePanel.selectTab(2)">highlights</a>
+                    </li>
+                </ul>
+                <div class="servicePanel" ng-show="servicePanel.isSelected(1)">
+                    <div  ng-controller = "cutController as cut">
+                        <div ng-repeat = "service in cut.services">
+                            <ul service-display-att></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicePanel" ng-show="servicePanel.isSelected(2)">
+                    <div ng-controller = "highlightController as highlights">
+                        <div ng-repeat = "service in highlights.services">
+                            <ul service-display-att></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Calendar-->
+
+            <div class="headerPanel" ng-show="headerPanel.isSelected(3)">
+                <div class="bootstrap-iso">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form method="post">
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="name">
+                                            Name
+                                           <span class="asteriskField">
+                                            *
+                                           </span>
+                                        </label>
+                                        <input class="form-control" id="name" name="name" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="date">
+                                            Date
+                                           <span class="asteriskField">
+                                            *
+                                           </span>
+                                        </label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="email">
+                                            Email
+                                           <span class="asteriskField">
+                                            *
+                                           </span>
+                                        </label>
+                                        <input class="form-control" id="email" name="email" type="text"/>
+                                    </div>
+                                    <div class="form-group" id="div_checkbox">
+                                        <label class="control-label requiredField">
+                                            Check all that apply
+                                           <span class="asteriskField">
+                                            *
+                                           </span>
+                                        </label>
+                                        <div class="container">
+                                            <label class="radio">
+                                                <input name="checkbox" type="radio" value="First Choice"/>
+                                                First Choice
+                                            </label>
+                                            <label class="radio">
+                                                <input name="checkbox" type="radio" value="Second Choice"/>
+                                                Second Choice
+                                            </label>
+                                            <label class="radio">
+                                                <input name="checkbox" type="radio" value="Third Choice"/>
+                                                Third Choice
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label " for="tel">
+                                            Telephone #
+                                        </label>
+                                        <input class="form-control" id="tel" name="tel" type="text"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button class="btn btn-primary " name="submit" type="submit">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Reviews-->
+
+            <div class="headerPanel container-fluid" ng-show="headerPanel.isSelected(4)" ng-controller="reviewFormController as reviewCtrl">
+                <!--  Product Reviews List -->
+                <h4>Reviews</h4>
+                <li ng-repeat="review in reviewCtrl.allReviews"  ng-show="reviewCtrl.review">
+                    <blockquote>
+                        <strong>{{reviewCtrl.review.stars}} Stars</strong>
+                        {{review.body}}
+                        <cite class="clearfix">—{{reviewCtrl.review.author}}</cite>
+                    </blockquote>
+                </li>
+                <form name="reviewForm" ng-submit="reviewCtrl.addReview()" novalidate>
+
+                    <!--  Review Form -->
+                    <h4>Submit a Review</h4>
+
+                    <p>{{reviewForm.$invalid}}</p>
+
+                    <fieldset class="form-group">
+                        <select ng-model="reviewCtrl.review.stars" class="form-control" ng-options="stars for stars in [5,4,3,2,1]" title="Stars" ng-required="true">
+                            <option value="">Rate the Product</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <textarea ng-model="reviewCtrl.review.body" class="form-control" placeholder="Write a short review of the product..." title="Review" ng-required="true"></textarea>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input ng-model="reviewCtrl.review.author" type="email" class="form-control" placeholder="jimmyDean@example.org" title="Email"  ng-required="true"/>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="submit" class="btn btn-primary pull-right" value="Submit Review" ng-disabled="reviewForm.$invalid"/>
+                    </fieldset>
+                </form>
+            </div>
+
+            <!--Contact-->
+
+            <div class="headerPanel" ng-show="headerPanel.isSelected(5)">
+
+            </div>
+
+            <!--Registration-->
+
+            <div class="headerPanel container jumbotron" ng-show="headerPanel.isSelected(6)" ng-controller="registrationController">
+                <section class="card register">
+                    <form name="registrationForm" novalidate ng-submit="registrationMsgFunc()">
+                        <div class="textintro">
+                            <h1>Register</h1>
+                            <p ng-show="registrationMsg">{{registrationMsg}}</p>
+                        </div>
+                        <fieldset class="form-group">
+                            <input type="firstName" name="firstName" placeholder="First Name" ng-model="user.firstName" ng-required="true">
+                                <p class="error valdiationerror" ng-show="registrationForm.firstName.$invalid && registrationForm.firstName.$touched">Must enter your first name</p><br>
+                            <input type="lastName" name="lastName" placeholder="Last Name" ng-model="user.lastName" ng-required="true">
+                                <p class="error valdiationerror" ng-show="registrationForm.lastName.$invalid && registrationForm.lastName.$touched">Must enter your last name</p><br>
+                            <input type="email" name="email" placeholder="Email" ng-model="user.email" ng-required="true">
+                                <p class="error valdiationerror" ng-show="registrationForm.email.$invalid && registrationForm.email.$touched">Must enter valid e-mail</p><br>
+                            <input type="password" name="password" placeholder="Password" ng-model="user.password"><br>
+                            <input type="password" name="password confirmation" placeholder="Re-type Password"><br>
+                        </fieldset>
+
+                        <button type="submit" class="btn">Register</button>
+                        <p>or <a href ng-click="headerPanel.selectTab(7)">login</a></p>
+                    </form>
+                </section>
+            </div>
+
+            <!--Login-->
+
+            <div class="headerPanel" ng-show="headerPanel.isSelected(7)">
+                <section class="card login">
+                    <form name="login form" novalidate>
+                        <div class="textintro">
+                            <h1>Login</h1>
+                        </div>
+                        <fieldset>
+                            <input type="email" name="email" placeholder="Email" ng-model="user.email" ng-required="true">
+                            <input type="password" name="password" placeholder="Password" ng-model="user.password" ng-required="true">
+                        </fieldset>
+                        <button type="submit" class="btn">Login</button>
+                        <p>or <a href ng-click="headerPanel.selectTab(6)">Register</a> </p>
+                    </form>
+                </section>
+            </div>
+        </section>
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>
